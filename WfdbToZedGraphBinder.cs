@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using ZedGraph;
 using WfdbCsharpWrapper;
+using WfdbToZedGraph.LocalFilesManager;
 
 namespace WfdbToZedGraph
 {
@@ -187,7 +188,7 @@ namespace WfdbToZedGraph
         {
             try
             {
-                return this.pathsManager.IsWfdbPathCorrect(path);
+                return  WfdbLocalFilesManager.IsWfdbPathCorrect(path);
 
             }
             catch
@@ -200,7 +201,7 @@ namespace WfdbToZedGraph
         {
             try
             {
-                return this.pathsManager.SetTempLocation(path);
+                return this.pathsManager.TempCatalog.SetTempLocation(path);
             }
             catch
             {
@@ -212,7 +213,7 @@ namespace WfdbToZedGraph
         {
             try
             {
-                this.pathsManager.AutomaticSetTempLocation();
+                this.pathsManager.TempCatalog.AutomaticSetTempLocation();
             }
             catch
             {
@@ -222,10 +223,10 @@ namespace WfdbToZedGraph
     
         #endregion
 
-        public void RunPathManager()
-        {
-            this.pathsManager = new WfdbLocalFilesManager(this);
-            this.pathsManager.AutomaticSetTempLocation();
-        }
+        //public void RunPathManager()
+        //{
+        //    this.pathsManager = new WfdbLocalFilesManager(this);
+        //    this.pathsManager.AutomaticSetTempLocation();
+        //}
     }
 }
