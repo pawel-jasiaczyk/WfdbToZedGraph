@@ -8,7 +8,7 @@ using ZedGraph;
 
 namespace WfdbToZedGraph
 {
-    class WfdbSignalWraper
+    public class WfdbSignalWraper
     {
         #region Variables
 
@@ -37,6 +37,8 @@ namespace WfdbToZedGraph
 
         #endregion
 
+        #region PublicMethods
+
         public PointPairList GetSamples()
         {
             PointPairList temp = new PointPairList();
@@ -47,5 +49,7 @@ namespace WfdbToZedGraph
             }
             return temp;
         }
+
+        #endregion
     }
 }

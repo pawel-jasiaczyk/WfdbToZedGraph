@@ -27,6 +27,7 @@ namespace WfdbToZedGraph.LocalFilesManager
         public bool DisposeAfterOneUse { get; set; }
         public bool UseIt { get; set; }
         public bool IsSet { get; set; }
+        public string TempDirecotryPath { get { return this.tempDirectoryPath; } }
 
         #endregion
 
@@ -97,11 +98,18 @@ namespace WfdbToZedGraph.LocalFilesManager
                 // Configuration conf = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 if(ConfigurationManager.AppSettings[pathParameterName] != null)
                 {
-                    this.SetTempLocation(ConfigurationManager.AppSettings[pathParameterName]);
-                    needToCreate = false;
+                    if (Directory.Exists(ConfigurationManager.AppSettings[pathParameterName]))
+                    {
+                        this.SetTempLocation(ConfigurationManager.AppSettings[pathParameterName]);
+                        needToCreate = false;
+                    }
+                    else
+                    {
+                        CreateTempDirectory(ConfigurationManager.AppSettings[pathParameterName], "");
+                        needToCreate = false;
+                    }
                 }
             }
-
             if (needToCreate)
             {
                 string userTempPath = Path.GetTempPath();
@@ -153,8 +161,8 @@ namespace WfdbToZedGraph.LocalFilesManager
                         while (!done);
                     }
                 }
-                this.wfdbLocalFilesManager.SetLocationAsFirst(this.tempDirectoryPath);
             }
+            this.wfdbLocalFilesManager.SetLocationAsFirst(this.tempDirectoryPath);
         }
 
         #endregion
@@ -165,7 +173,11 @@ namespace WfdbToZedGraph.LocalFilesManager
         {
             try
             {
-                string finalPath = Path.Combine(path, catalogName);
+                string finalPath;
+                if (string.IsNullOrEmpty(catalogName))
+                    finalPath = path;
+                else
+                    finalPath = Path.Combine(path, catalogName);
                 if (!Directory.Exists(finalPath))
                 {
                     DirectoryInfo info = Directory.CreateDirectory(finalPath);

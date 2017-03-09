@@ -7,7 +7,7 @@ using WfdbCsharpWrapper;
 
 namespace WfdbToZedGraph
 {
-    class WfdbRecordWraper
+    public class WfdbRecordWraper
     {
         private WfdbCsharpWrapper.Record record;
         // private List<Signal> sourceSignals;

@@ -26,14 +26,25 @@ namespace WfdbToZedGraph.LocalFilesManager
         #region Static Fields
 
         private static char[] ForbidenInPath = { ' ', '\r', '\n' };
+        private static string[] recordExtensions = { "atr", "dat", "hea" };
 
         #endregion
 
         #region Properties
 
         public bool IsWfdbPathSet { get { return this.isWfdbPathSet; } }
-        public string TempLocation { get { return this.tempPath; } }
-        public TempCatalog TempCatalog { get { return this.tempCatalog; } }
+        // public string TempLocation { get { return this.tempPath; } }
+        public TempCatalog TempCatalog 
+        { 
+            get 
+            { 
+                return this.tempCatalog; 
+            } 
+            set
+            {
+                this.tempCatalog = value;
+            }
+        }
 
         // Unused yet
         public bool UseAppSettings { get; set; }
@@ -42,13 +53,14 @@ namespace WfdbToZedGraph.LocalFilesManager
 
         #region Constructors
 
-        public WfdbLocalFilesManager(WfdbToZedGraphBinder zedgraphWfdbControl)
+        public WfdbLocalFilesManager(WfdbToZedGraphBinder wfdbToZedGraphBinder)
         {
             this.paths = new List<string>();
             LoadPathsFromEnvirontment();
 
-            this.master = zedgraphWfdbControl;
+            this.master = wfdbToZedGraphBinder;
             this.isWfdbPathSet = IsWfdbPathSetInSystem();
+            // this.tempCatalog = new TempCatalog(this, true, true);
         }
 
         #endregion
@@ -137,9 +149,82 @@ namespace WfdbToZedGraph.LocalFilesManager
                 return false;
         }
 
+        public Record GetRecordFromFile(string path)
+        {
+            try
+            {
+                if(Directory.Exists(Path.GetDirectoryName(path)))
+                {
+                    if(this.tempCatalog.IsSet)
+                    {
+                        CopyRecordFiles(Path.GetFileNameWithoutExtension(path), path, this.tempCatalog.TempDirecotryPath);
+                        Record toReturn = new Record(Path.GetFileNameWithoutExtension(path));
+                        return toReturn;
+                    }
+                    else
+                    {
+                        // TODO manage path for open correct record, if this path is set in 
+                        // environment variables
+                        return new Record(Path.GetFileNameWithoutExtension(path));
+                    }
+                }
+                else
+                {
+                    throw new DirectoryNotFoundException(path);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void SetLocationAsFirst(string path)
+        {
+            LoadPathsFromEnvirontment();
+            this.paths.Insert(0, path);
+            LoadPathsToEnvirontmen();
+        }
         #endregion
 
         #region Private Methods
+
+        private void CopyRecordFiles(string recordName, string sourcePath, string targetPath)
+        {
+            try
+            {
+                if(Directory.Exists(Path.GetDirectoryName(sourcePath)) && 
+                    Directory.Exists(Path.GetDirectoryName(targetPath)))
+                {
+                    foreach(string ext in recordExtensions)
+                    {
+                        string fileName = recordName + "." + ext;
+                        string target = Path.Combine(targetPath, fileName);
+                        // if any files of record exist in target path, delete it
+                        // beause all record files must be get from fresh record
+                        if(File.Exists(target))
+                        {
+                            File.Delete(target);
+                        }
+                        string source = Path.Combine(Path.GetDirectoryName(sourcePath), fileName);
+                        // copy all record files
+                        if(File.Exists(source))
+                        {
+                            File.Copy(source, target, true);
+                        }
+                    }
+                }
+                else
+                {
+                    // TODO specyfi whitch one directory do not exist
+                    throw new DirectoryNotFoundException();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         private bool IsWfdbPathSetInSystem()
         {
@@ -176,14 +261,6 @@ namespace WfdbToZedGraph.LocalFilesManager
             }
             Wfdb.WfdbPath = stb.ToString();
         }
-
-        public void SetLocationAsFirst(string path)
-        {
-            LoadPathsFromEnvirontment();
-            this.paths.Insert(0, path);
-            LoadPathsToEnvirontmen();
-        }
-
 
         #endregion
 
