@@ -26,7 +26,7 @@ namespace WfdbToZedGraph.LocalFilesManager
         #region Static Fields
 
         private static char[] ForbidenInPath = { ' ', '\r', '\n' };
-        private static string[] recordExtensions = { "atr", "dat", "hea" };
+        private static string[] recordExtensions = { "ari", "atr", "dat", "hea" };
 
         #endregion
 
