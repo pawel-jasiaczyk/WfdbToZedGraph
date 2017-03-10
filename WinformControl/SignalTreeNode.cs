@@ -24,5 +24,22 @@ namespace WfdbToZedGraph.WinformControl
             this.Signal = signal;
             this.Text = "Signal " + signal.SignalNumber;
         }
+
+        public string GetInfo()
+        {
+            StringBuilder stb = new StringBuilder();
+            stb.Append("Name: ");
+            stb.Append(Signal.FileName);
+            stb.Append(" signal: ");
+            stb.AppendLine(Signal.SignalNumber.ToString());
+            stb.Append("Samples: ");
+            stb.AppendLine(Signal.SignalNumberOfSamples.ToString());
+            stb.Append("Opened: ");
+            if (Signal.AlreadyOpened)
+                stb.AppendLine("Yes");
+            else
+                stb.AppendLine("No");
+            return stb.ToString();
+        }
     }
 }

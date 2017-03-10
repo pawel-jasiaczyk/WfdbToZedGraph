@@ -34,6 +34,18 @@ namespace WfdbToZedGraph
             get { return this.numberOfSambples; } 
         }
 
+        public string FileName { get { return this.fileName; } }
+        public bool AlreadyOpened 
+        { 
+            get 
+            {
+                if (samples == null)
+                    return false;
+                else
+                    return true;
+            } 
+        }
+
         #endregion
 
         #region Constructors

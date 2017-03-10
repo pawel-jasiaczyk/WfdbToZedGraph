@@ -66,6 +66,12 @@
     <Compile Include="WfdbSignalWraper.cs" />
     <Compile Include="WfdbToZedGraphBinder.cs" />
     <Compile Include="WinformControl\SignalTreeNode.cs" />
+    <Compile Include="WinformControl\WfdbToZedGraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinformControl\WfdbToZedGraphControl.Designer.cs">
+      <DependentUpon>WfdbToZedGraphControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="wfdb.dll" />
@@ -76,6 +82,11 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WinformControl\WfdbToZedGraphControl.resx">
+      <DependentUpon>WfdbToZedGraphControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
