@@ -10,7 +10,6 @@ namespace WfdbToZedGraph
     public class WfdbRecordWraper
     {
         private WfdbCsharpWrapper.Record record;
-        // private List<Signal> sourceSignals;
         private List<WfdbSignalWraper> signals;
 
         public List<WfdbSignalWraper> Signals { get { return this.signals; } }
@@ -24,8 +23,6 @@ namespace WfdbToZedGraph
             {
                 this.signals.Add(new WfdbSignalWraper(s));
             }
-//          this.sourceSignals = new List<Signal>();
-//             this.sourceSignals = this.record.Signals.ToList<Signal>();
         }
     }
 }

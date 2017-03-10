@@ -9,13 +9,12 @@ using System.Configuration;
 
 namespace WfdbToZedGraph.LocalFilesManager
 {
-    public class WfdbLocalFilesManager : IDisposable
+    public class WfdbLocalFilesManager //: IDisposable
     {
         #region Fields
 
         private WfdbToZedGraphBinder master;
         private bool isWfdbPathSet = false;
-        private string tempPath = "";
         private bool tempWasSet = false;
         private string pathParamName = "wfdbTempDirectory";
         private List<string> paths;
@@ -33,7 +32,6 @@ namespace WfdbToZedGraph.LocalFilesManager
         #region Properties
 
         public bool IsWfdbPathSet { get { return this.isWfdbPathSet; } }
-        // public string TempLocation { get { return this.tempPath; } }
         public TempCatalog TempCatalog 
         { 
             get 
@@ -60,7 +58,6 @@ namespace WfdbToZedGraph.LocalFilesManager
 
             this.master = wfdbToZedGraphBinder;
             this.isWfdbPathSet = IsWfdbPathSetInSystem();
-            // this.tempCatalog = new TempCatalog(this, true, true);
         }
 
         #endregion
@@ -103,6 +100,8 @@ namespace WfdbToZedGraph.LocalFilesManager
 
         /// <summary>
         /// Set this path as database location
+        /// This method set location hard.
+        /// If you want to add location, use AddDataBaseLocation
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -114,6 +113,8 @@ namespace WfdbToZedGraph.LocalFilesManager
                 {
                     Wfdb.WfdbPath = path;
                     this.isWfdbPathSet = true;
+                    this.paths.Clear();
+                    this.paths.Add(path);
                     return true;
                 }
                 catch
@@ -138,6 +139,7 @@ namespace WfdbToZedGraph.LocalFilesManager
                     String lastPath = Wfdb.WfdbPath;
                     Wfdb.WfdbPath = Wfdb.WfdbPath + ";" + path;
                     this.isWfdbPathSet = true;
+                    this.paths.Add(path);
                     return true;
                 }
                 catch
@@ -278,11 +280,10 @@ namespace WfdbToZedGraph.LocalFilesManager
 
         #region IDisposable implementation
 
-        public void Dispose()
-        {
-            
-            //            RemoveTempDirectory();
-        }
+//        public void Dispose()
+//        {
+////            RemoveTempDirectory();
+//        }
 
         #endregion
     }

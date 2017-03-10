@@ -24,7 +24,9 @@ namespace WfdbToZedGraph
         }
 
         public int SignalNumberOfSamples
-        { get { return this.signal.NumberOfSamples; } }
+        { 
+            get { return this.signal.NumberOfSamples; } 
+        }
 
         #endregion
 
