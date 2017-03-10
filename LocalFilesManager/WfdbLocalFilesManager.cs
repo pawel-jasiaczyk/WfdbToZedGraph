@@ -182,7 +182,19 @@ namespace WfdbToZedGraph.LocalFilesManager
         public void SetLocationAsFirst(string path)
         {
             LoadPathsFromEnvirontment();
-            this.paths.Insert(0, path);
+            if (!this.paths.Contains(path))
+            {
+                this.paths.Insert(0, path);
+            }
+            else
+            {
+                int index = paths.IndexOf(path);
+                if (index != 0)
+                {
+                    paths.RemoveAt(index);
+                    paths.Insert(0, path);
+                }
+            }
             LoadPathsToEnvirontmen();
         }
         #endregion
