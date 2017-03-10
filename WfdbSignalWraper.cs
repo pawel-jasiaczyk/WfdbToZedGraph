@@ -14,18 +14,24 @@ namespace WfdbToZedGraph
 
         private Signal signal;
 
+        private int signalNumber;
+        private int numberOfSambples;
+        private PointPairList samples;
+        private string fileName;
+        private string description;
+
         #endregion
 
         #region Properties
 
         public int SignalNumber
         {
-            get { return signal.Number; }
+            get { return this.signalNumber; }
         }
 
         public int SignalNumberOfSamples
         { 
-            get { return this.signal.NumberOfSamples; } 
+            get { return this.numberOfSambples; } 
         }
 
         #endregion
@@ -35,6 +41,10 @@ namespace WfdbToZedGraph
         public WfdbSignalWraper(Signal signal)
         {
             this.signal = signal;
+            this.signalNumber = signal.Number;
+            this.numberOfSambples = signal.NumberOfSamples;
+            this.fileName = signal.FileName;
+            this.description = signal.Description;
         }
 
         #endregion
@@ -43,13 +53,23 @@ namespace WfdbToZedGraph
 
         public PointPairList GetSamples()
         {
-            PointPairList temp = new PointPairList();
-            List<WfdbCsharpWrapper.Sample> samples = signal.ReadAll().ToList();
-            for(int i = 0; i < this.signal.NumberOfSamples; i++)
+            if (this.samples == null)
             {
-                temp.Add(i, samples[i]);
+                return this.ReadSamplesFromRecord();
             }
-            return temp;
+            else
+                return this.samples;
+        }
+
+        public PointPairList ReadSamplesFromRecord()
+        { 
+            this.samples = new PointPairList();
+            List<WfdbCsharpWrapper.Sample> samples = signal.ReadAll().ToList();
+            for (int i = 0; i < this.signal.NumberOfSamples; i++)
+            {
+                this.samples.Add(i, samples[i]);
+            }
+            return this.samples;
         }
 
         #endregion

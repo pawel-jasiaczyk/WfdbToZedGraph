@@ -14,12 +14,14 @@ namespace WfdbToZedGraph
     {
         #region Variables
 
-        private Record record;
         private WfdbLocalFilesManager pathsManager;
+        private List<WfdbRecordWraper> records;
 
         #endregion
 
         #region Properties
+
+        public List<WfdbRecordWraper> Records { get { return this.records; } }
 
         #endregion
 
@@ -31,6 +33,7 @@ namespace WfdbToZedGraph
         public WfdbToZedGraphBinder()
         {
             this.pathsManager = new WfdbLocalFilesManager(this);
+            records = new List<WfdbRecordWraper>();
         }
 
         #endregion
@@ -43,6 +46,7 @@ namespace WfdbToZedGraph
             {
                 Record r = this.pathsManager.GetRecordFromFile(path);
                 WfdbRecordWraper result = new WfdbRecordWraper(r);
+                this.records.Add(result);
                 return result;
             }
             catch
