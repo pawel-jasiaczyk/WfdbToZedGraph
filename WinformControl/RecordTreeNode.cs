@@ -29,5 +29,12 @@ namespace WfdbToZedGraph.WinformControl
                 this.Nodes.Add(s);
             }
         }
+        /// <summary>
+        /// On work - removes only node, not record
+        /// </summary>
+        public void RemoveRecord()
+        {
+            this.Remove();
+        }
     }
 }

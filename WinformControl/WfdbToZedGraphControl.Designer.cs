@@ -28,10 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainerTree = new System.Windows.Forms.SplitContainer();
             this.splitContainerControls = new System.Windows.Forms.SplitContainer();
             this.buttonRun = new System.Windows.Forms.Button();
             this.textBoxInfo = new System.Windows.Forms.TextBox();
+            this.contextMenuStripSignalNode = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripRecordNode = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signalsTreeView = new WfdbToZedGraph.WinformControl.SignalsTreeView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTree)).BeginInit();
             this.splitContainerTree.Panel1.SuspendLayout();
@@ -41,6 +46,8 @@
             this.splitContainerControls.Panel1.SuspendLayout();
             this.splitContainerControls.Panel2.SuspendLayout();
             this.splitContainerControls.SuspendLayout();
+            this.contextMenuStripSignalNode.SuspendLayout();
+            this.contextMenuStripRecordNode.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerTree
@@ -100,6 +107,33 @@
             this.textBoxInfo.Size = new System.Drawing.Size(188, 276);
             this.textBoxInfo.TabIndex = 0;
             // 
+            // contextMenuStripSignalNode
+            // 
+            this.contextMenuStripSignalNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.contextMenuStripSignalNode.Name = "contextMenuStrip1";
+            this.contextMenuStripSignalNode.Size = new System.Drawing.Size(118, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.toolStripMenuItem1.Text = "Remove";
+            // 
+            // contextMenuStripRecordNode
+            // 
+            this.contextMenuStripRecordNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeRecordToolStripMenuItem});
+            this.contextMenuStripRecordNode.Name = "contextMenuStripRecordNode";
+            this.contextMenuStripRecordNode.Size = new System.Drawing.Size(158, 48);
+            // 
+            // removeRecordToolStripMenuItem
+            // 
+            this.removeRecordToolStripMenuItem.Name = "removeRecordToolStripMenuItem";
+            this.removeRecordToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.removeRecordToolStripMenuItem.Text = "Remove Record";
+            this.removeRecordToolStripMenuItem.Click += new System.EventHandler(this.removeRecordToolStripMenuItem_Click);
+            // 
             // signalsTreeView
             // 
             this.signalsTreeView.CheckBoxes = true;
@@ -109,6 +143,7 @@
             this.signalsTreeView.Size = new System.Drawing.Size(287, 280);
             this.signalsTreeView.TabIndex = 0;
             this.signalsTreeView.ZedGraphConrol = null;
+            this.signalsTreeView.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.signalsTreeView_NodeMouseHover);
             this.signalsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.signalsTreeView_NodeMouseClick);
             // 
             // WfdbToZedGraphControl
@@ -127,6 +162,8 @@
             this.splitContainerControls.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControls)).EndInit();
             this.splitContainerControls.ResumeLayout(false);
+            this.contextMenuStripSignalNode.ResumeLayout(false);
+            this.contextMenuStripRecordNode.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -138,5 +175,9 @@
         private System.Windows.Forms.SplitContainer splitContainerControls;
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.TextBox textBoxInfo;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripSignalNode;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripRecordNode;
+        private System.Windows.Forms.ToolStripMenuItem removeRecordToolStripMenuItem;
     }
 }
