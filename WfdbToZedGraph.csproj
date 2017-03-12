@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LocalFilesManager\WfdbLocalFilesManager.cs" />
     <Compile Include="LocalFilesManager\WfdbPathException.cs" />
+    <Compile Include="WfdbRecordWraperInstance.cs" />
     <Compile Include="WinformControl\RecordTreeNode.cs" />
     <Compile Include="WinformControl\SignalsTreeView.cs">
       <SubType>Component</SubType>

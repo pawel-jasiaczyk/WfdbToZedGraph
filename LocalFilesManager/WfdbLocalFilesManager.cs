@@ -151,7 +151,49 @@ namespace WfdbToZedGraph.LocalFilesManager
                 return false;
         }
 
-        public Record GetRecordFromFile(string path)
+        public WfdbRecordWraper OpenRecordFromFile(string path)
+        {
+            Record r;
+            string[] exts =  {};
+            try
+            {
+                if(Directory.Exists(Path.GetDirectoryName(path)))
+                {
+                    if(this.tempCatalog.IsSet)
+                    {
+                        exts = CopyRecordFiles(Path.GetFileNameWithoutExtension(path), path, this.tempCatalog.TempDirecotryPath);
+                        r = new Record(Path.GetFileNameWithoutExtension(path));
+                        // return toReturn;
+                    }
+                    else
+                    {
+                        // TODO manage path for open correct record, if this path is set in 
+                        // environment variables
+                        r = new Record(Path.GetFileNameWithoutExtension(path));
+                    }
+                }
+                else
+                {
+                    throw new DirectoryNotFoundException(path);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            // Record r = this.GetRecordFromFile(path);
+            if (r != null)
+            {
+                WfdbRecordWraperInstance result = new WfdbRecordWraperInstance(r);
+                result.UsedExtensions = exts;
+                result.UseTemp = this.tempCatalog.IsSet;
+                result.TempPath = this.tempCatalog.TempDirecotryPath;
+                return result;
+            }
+            return null;
+        }
+        // All functionalities moved to OpenRecordFromFile
+        private Record GetRecordFromFile(string path)
         {
             try
             {
@@ -203,8 +245,9 @@ namespace WfdbToZedGraph.LocalFilesManager
 
         #region Private Methods
 
-        private void CopyRecordFiles(string recordName, string sourcePath, string targetPath)
+        private string[] CopyRecordFiles(string recordName, string sourcePath, string targetPath)
         {
+            List<string> usedExtensions = new List<string>();
             try
             {
                 if(Directory.Exists(Path.GetDirectoryName(sourcePath)) && 
@@ -225,8 +268,10 @@ namespace WfdbToZedGraph.LocalFilesManager
                         if(File.Exists(source))
                         {
                             File.Copy(source, target, true);
+                            usedExtensions.Add(ext);
                         }
                     }
+                    return usedExtensions.ToArray();
                 }
                 else
                 {

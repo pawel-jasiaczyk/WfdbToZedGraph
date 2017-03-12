@@ -44,8 +44,7 @@ namespace WfdbToZedGraph
         {
             try
             {
-                Record r = this.pathsManager.GetRecordFromFile(path);
-                WfdbRecordWraper result = new WfdbRecordWraper(r);
+                WfdbRecordWraper result = this.pathsManager.OpenRecordFromFile(path);
                 this.records.Add(result);
                 return result;
             }

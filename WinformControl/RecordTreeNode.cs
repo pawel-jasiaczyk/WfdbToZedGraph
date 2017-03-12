@@ -35,6 +35,7 @@ namespace WfdbToZedGraph.WinformControl
         public void RemoveRecord()
         {
             this.Remove();
+            this.Record.AutoRemove();
         }
     }
 }
