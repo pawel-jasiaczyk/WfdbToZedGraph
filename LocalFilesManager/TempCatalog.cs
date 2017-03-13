@@ -165,6 +165,19 @@ namespace WfdbToZedGraph.LocalFilesManager
             this.wfdbLocalFilesManager.SetLocationAsFirst(this.tempDirectoryPath);
         }
 
+        public void RemoveTempCatalog()
+        {
+            DirectoryInfo di = new DirectoryInfo(this.tempDirectoryPath);
+            try
+            {
+                di.Delete(true);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         #endregion
 
         #region Private Methods

@@ -10,7 +10,7 @@ using WfdbToZedGraph.LocalFilesManager;
 
 namespace WfdbToZedGraph
 {
-    public class WfdbToZedGraphBinder
+    public class WfdbToZedGraphBinder : IDisposable
     {
         #region Variables
 
@@ -45,6 +45,7 @@ namespace WfdbToZedGraph
             try
             {
                 WfdbRecordWraper result = this.pathsManager.OpenRecordFromFile(path);
+                result.OnRemove += result_OnRemove;
                 this.records.Add(result);
                 return result;
             }
@@ -53,6 +54,28 @@ namespace WfdbToZedGraph
                 throw;
             }
 
+        }
+
+        private void RemoveTempData(bool removeTempDirectory)
+        {
+            foreach(WfdbRecordWraper rec in this.records)
+            {
+                if(rec.UseTemp)
+                {
+                    rec.AutoRemove();
+                }
+            }
+            this.pathsManager.TempCatalog.RemoveTempCatalog();
+        }
+
+        private void result_OnRemove(object sender, EventArgs e)
+        {
+            WfdbRecordWraper rec = sender as WfdbRecordWraper;
+            if (rec != null)
+            {
+                if (this.records.Contains(rec))
+                    this.records.Remove(rec);
+            }
         }
 
         #endregion
@@ -126,5 +149,10 @@ namespace WfdbToZedGraph
         }
     
         #endregion
+
+        public void Dispose()
+        {
+            this.RemoveTempData(false);
+        }
     }
 }

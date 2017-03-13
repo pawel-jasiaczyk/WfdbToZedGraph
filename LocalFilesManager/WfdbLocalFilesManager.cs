@@ -188,10 +188,13 @@ namespace WfdbToZedGraph.LocalFilesManager
                 result.UsedExtensions = exts;
                 result.UseTemp = this.tempCatalog.IsSet;
                 result.TempPath = this.tempCatalog.TempDirecotryPath;
+                result.OnRemove += result_OnRemove;
                 return result;
             }
             return null;
         }
+
+
         // All functionalities moved to OpenRecordFromFile
         private Record GetRecordFromFile(string path)
         {
@@ -241,6 +244,7 @@ namespace WfdbToZedGraph.LocalFilesManager
             }
             LoadPathsToEnvirontmen();
         }
+
         #endregion
 
         #region Private Methods
@@ -319,6 +323,42 @@ namespace WfdbToZedGraph.LocalFilesManager
                     stb.Append(";");
             }
             Wfdb.WfdbPath = stb.ToString();
+        }
+
+        /// <summary>
+        /// Delete only temporary files of record
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        private bool DeleteRecordFiles(WfdbRecordWraper record)
+        {
+            if (record.UseTemp)
+            {
+                foreach (string ext in record.UsedExtensions)
+                {
+                    string fileName = record.Name + "." + ext;
+                    string fullPath = Path.Combine(record.TempPath, fileName);
+                    FileInfo fi = new FileInfo(fullPath);
+                    try
+                    {
+                        if (fi.Exists)
+                            fi.Delete();
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void result_OnRemove(object sender, EventArgs e)
+        {
+            WfdbRecordWraper rec = sender as WfdbRecordWraper;
+            if (rec != null)
+                this.DeleteRecordFiles(rec);
         }
 
         #endregion

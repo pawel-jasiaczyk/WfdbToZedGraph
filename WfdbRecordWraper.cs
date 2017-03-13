@@ -57,13 +57,8 @@ namespace WfdbToZedGraph
             this.record.Dispose();
             if (this.OnRemove != null)
                 this.OnRemove(this, new EventArgs());
-            if (this.UseTemp)
-                this.DeleteFiles();
             return true;
         }
-
-        private void DeleteFiles()
-        { }
 
         #endregion
     }

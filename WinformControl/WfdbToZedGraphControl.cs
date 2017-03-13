@@ -110,8 +110,36 @@ namespace WfdbToZedGraph.WinformControl
             RecordTreeNode node = (this.signalsTreeView.SelectedNode as RecordTreeNode);
             if(node != null)
             {
-                MessageBox.Show(node.Record.Name);
-                node.RemoveRecord();
+                // MessageBox.Show(node.Record.Name);
+                List<SignalTreeNode> loaded = new List<SignalTreeNode>();
+                foreach(TreeNode signode in node.Nodes)
+                {
+                    SignalTreeNode sigNode = signode as SignalTreeNode;
+                    if(sigNode != null)
+                    {
+                        if(this.ZedGraphControl.GraphPane.CurveList.Contains(sigNode.Curve))
+                        {
+                            loaded.Add(sigNode);
+                        }
+                    }
+                }
+                if(loaded.Count != 0)
+                {
+                    MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                    string title = "";
+                    string message = "This signals are loaded: \n\r";
+                    foreach(SignalTreeNode s in loaded)
+                    {
+                        message += s.Signal.SignalNumber +  "\n\r"; 
+                    }
+                    message += "If you confirm, you will loose control about them from this control";
+                    if(MessageBox.Show(message, title, buttons) == DialogResult.Yes)
+                    {
+                        node.RemoveRecord();
+                    }
+                }
+                else
+                    node.RemoveRecord();
             }
         }
 
