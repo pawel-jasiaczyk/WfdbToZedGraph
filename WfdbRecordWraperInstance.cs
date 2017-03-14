@@ -12,6 +12,5 @@ namespace WfdbToZedGraph
         public WfdbRecordWraperInstance(Record record)
             : base(record)
         { }
-
     }
 }

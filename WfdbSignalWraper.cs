@@ -46,6 +46,8 @@ namespace WfdbToZedGraph
             } 
         }
 
+        public bool OpenedByWfdb { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -57,6 +59,16 @@ namespace WfdbToZedGraph
             this.numberOfSambples = signal.NumberOfSamples;
             this.fileName = signal.FileName;
             this.description = signal.Description;
+            this.OpenedByWfdb = true;
+        }
+
+        public WfdbSignalWraper(PointPairList pointPairList)
+        {
+            if(pointPairList == null)
+                throw new NullReferenceException();
+            this.OpenedByWfdb = false;
+            this.fileName = "";
+            this.signalNumber = 0;
         }
 
         #endregion
