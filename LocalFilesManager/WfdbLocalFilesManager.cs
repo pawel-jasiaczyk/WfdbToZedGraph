@@ -194,7 +194,6 @@ namespace WfdbToZedGraph.LocalFilesManager
             return null;
         }
 
-
         // All functionalities moved to OpenRecordFromFile
         private Record GetRecordFromFile(string path)
         {
@@ -243,6 +242,22 @@ namespace WfdbToZedGraph.LocalFilesManager
                 }
             }
             LoadPathsToEnvirontmen();
+        }
+
+        public static void SaveTextFile(string text, string path, string name, string extension)
+        {
+            string fileName = name + "." + extension;
+            string fullName = Path.Combine(path, fileName);
+            SaveTextFile(text, fullName);
+        }
+
+        public static void SaveTextFile(string text, string fullName)
+        {
+            FileInfo fi = new FileInfo(fullName);
+            using(StreamWriter sw = fi.CreateText())
+            {
+                sw.Write(text);
+            }
         }
 
         #endregion

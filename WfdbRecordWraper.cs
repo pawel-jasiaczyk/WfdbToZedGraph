@@ -61,5 +61,39 @@ namespace WfdbToZedGraph
         }
 
         #endregion
+
+        #region Write Methods
+
+        public string GetCsvString()
+        {
+            StringBuilder stb = new StringBuilder();
+            // Get the longest signal;
+            int maxLength = 0;
+            foreach(WfdbSignalWraper sig in this.signals)
+            {
+                if (sig.SignalNumberOfSamples > maxLength)
+                    maxLength = sig.SignalNumberOfSamples;
+            }
+            // loop over all samples
+            for (int i = 0; i < maxLength; i++)
+            {
+                // loop over all signals
+                for(int j = 0; j < this.signals.Count; j++)
+                {
+                    WfdbSignalWraper sig = this.signals[j];
+                    if (sig.SignalNumberOfSamples > i)
+                        stb.Append(sig.GetSamples()[i].Y);
+                    else
+                        stb.Append("0");
+                    if (j == this.signals.Count - 1)
+                        stb.AppendLine("");
+                    else
+                        stb.Append(',');
+                }
+            }
+            return stb.ToString();
+        }
+
+        #endregion
     }
 }

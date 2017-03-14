@@ -143,6 +143,24 @@ namespace WfdbToZedGraph.WinformControl
             }
         }
 
+        private void saveRecordToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RecordTreeNode recNode = this.signalsTreeView.SelectedNode as RecordTreeNode;
+            if(recNode != null)
+            {
+                // MessageBox.Show(recNode.Record.GetCsvString().Substring(0, 1000));
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.DefaultExt = "csv";
+                if (string.IsNullOrEmpty(recNode.Record.Name))
+                    sfd.FileName = "newFile";
+                else
+                    sfd.FileName = recNode.Record.Name;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                    WfdbToZedGraph.LocalFilesManager.WfdbLocalFilesManager.SaveTextFile
+                        (recNode.Record.GetCsvString(), sfd.FileName);
+            }
+        }
+
         #endregion
 
         #endregion
