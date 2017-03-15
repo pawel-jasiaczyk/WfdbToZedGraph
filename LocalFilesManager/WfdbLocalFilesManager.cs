@@ -94,6 +94,22 @@ namespace WfdbToZedGraph.LocalFilesManager
             return true;
         }
 
+        public static void SaveTextFile(string text, string path, string name, string extension)
+        {
+            string fileName = name + "." + extension;
+            string fullName = Path.Combine(path, fileName);
+            SaveTextFile(text, fullName);
+        }
+
+        public static void SaveTextFile(string text, string fullName)
+        {
+            FileInfo fi = new FileInfo(fullName);
+            using(StreamWriter sw = fi.CreateText())
+            {
+                sw.Write(text);
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -186,12 +202,19 @@ namespace WfdbToZedGraph.LocalFilesManager
             {
                 WfdbRecordWraperInstance result = new WfdbRecordWraperInstance(r);
                 result.UsedExtensions = exts;
-                result.UseTemp = this.tempCatalog.IsSet;
+                result.SetUseTemp(this.tempCatalog.IsSet);
                 result.TempPath = this.tempCatalog.TempDirecotryPath;
                 result.OnRemove += result_OnRemove;
                 return result;
             }
             return null;
+        }
+
+        public WfdbRecordWraper CreateEmptyRecord(string name)
+        {
+            WfdbRecordWraperInstance result = new WfdbRecordWraperInstance(name);
+            result.SetUseTemp(false);
+            return result;
         }
 
         // All functionalities moved to OpenRecordFromFile
@@ -243,23 +266,6 @@ namespace WfdbToZedGraph.LocalFilesManager
             }
             LoadPathsToEnvirontmen();
         }
-
-        public static void SaveTextFile(string text, string path, string name, string extension)
-        {
-            string fileName = name + "." + extension;
-            string fullName = Path.Combine(path, fileName);
-            SaveTextFile(text, fullName);
-        }
-
-        public static void SaveTextFile(string text, string fullName)
-        {
-            FileInfo fi = new FileInfo(fullName);
-            using(StreamWriter sw = fi.CreateText())
-            {
-                sw.Write(text);
-            }
-        }
-
         #endregion
 
         #region Private Methods

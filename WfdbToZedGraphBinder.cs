@@ -56,6 +56,14 @@ namespace WfdbToZedGraph
 
         }
 
+        public WfdbRecordWraper CreateEmptyRecord(string name)
+        {
+            WfdbRecordWraper result = 
+                this.pathsManager.CreateEmptyRecord(name);
+            this.records.Add(result);
+            return result;
+        }
+
         private void RemoveTempData(bool removeTempDirectory)
         {
             foreach(WfdbRecordWraper rec in this.records)

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainerTree = new System.Windows.Forms.SplitContainer();
-            this.signalsTreeView = new WfdbToZedGraph.WinformControl.SignalsTreeView();
             this.splitContainerControls = new System.Windows.Forms.SplitContainer();
             this.buttonRun = new System.Windows.Forms.Button();
             this.textBoxInfo = new System.Windows.Forms.TextBox();
@@ -39,6 +38,10 @@
             this.contextMenuStripRecordNode = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveRecordToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripTree = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addEmptyRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signalsTreeView = new WfdbToZedGraph.WinformControl.SignalsTreeView();
+            this.addSignalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTree)).BeginInit();
             this.splitContainerTree.Panel1.SuspendLayout();
             this.splitContainerTree.Panel2.SuspendLayout();
@@ -49,6 +52,7 @@
             this.splitContainerControls.SuspendLayout();
             this.contextMenuStripSignalNode.SuspendLayout();
             this.contextMenuStripRecordNode.SuspendLayout();
+            this.contextMenuStripTree.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerTree
@@ -68,18 +72,6 @@
             this.splitContainerTree.Size = new System.Drawing.Size(287, 560);
             this.splitContainerTree.SplitterDistance = 280;
             this.splitContainerTree.TabIndex = 2;
-            // 
-            // signalsTreeView
-            // 
-            this.signalsTreeView.CheckBoxes = true;
-            this.signalsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.signalsTreeView.Location = new System.Drawing.Point(0, 0);
-            this.signalsTreeView.Name = "signalsTreeView";
-            this.signalsTreeView.Size = new System.Drawing.Size(287, 280);
-            this.signalsTreeView.TabIndex = 0;
-            this.signalsTreeView.ZedGraphConrol = null;
-            this.signalsTreeView.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.signalsTreeView_NodeMouseHover);
-            this.signalsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.signalsTreeView_NodeMouseClick);
             // 
             // splitContainerControls
             // 
@@ -137,9 +129,11 @@
             // 
             this.contextMenuStripRecordNode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeRecordToolStripMenuItem,
-            this.saveRecordToCSVToolStripMenuItem});
+            this.saveRecordToCSVToolStripMenuItem,
+            this.addSignalToolStripMenuItem});
             this.contextMenuStripRecordNode.Name = "contextMenuStripRecordNode";
-            this.contextMenuStripRecordNode.Size = new System.Drawing.Size(177, 70);
+            this.contextMenuStripRecordNode.Size = new System.Drawing.Size(177, 92);
+            this.contextMenuStripRecordNode.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripRecordNode_Opening);
             // 
             // removeRecordToolStripMenuItem
             // 
@@ -154,6 +148,40 @@
             this.saveRecordToCSVToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.saveRecordToCSVToolStripMenuItem.Text = "Save Record to CSV";
             this.saveRecordToCSVToolStripMenuItem.Click += new System.EventHandler(this.saveRecordToCSVToolStripMenuItem_Click);
+            // 
+            // contextMenuStripTree
+            // 
+            this.contextMenuStripTree.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addEmptyRecordToolStripMenuItem});
+            this.contextMenuStripTree.Name = "contextMenuStripTree";
+            this.contextMenuStripTree.Size = new System.Drawing.Size(174, 26);
+            // 
+            // addEmptyRecordToolStripMenuItem
+            // 
+            this.addEmptyRecordToolStripMenuItem.Name = "addEmptyRecordToolStripMenuItem";
+            this.addEmptyRecordToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.addEmptyRecordToolStripMenuItem.Text = "Add Empty Record";
+            this.addEmptyRecordToolStripMenuItem.Click += new System.EventHandler(this.addEmptyRecordToolStripMenuItem_Click);
+            // 
+            // signalsTreeView
+            // 
+            this.signalsTreeView.CheckBoxes = true;
+            this.signalsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.signalsTreeView.Location = new System.Drawing.Point(0, 0);
+            this.signalsTreeView.Name = "signalsTreeView";
+            this.signalsTreeView.Size = new System.Drawing.Size(287, 280);
+            this.signalsTreeView.TabIndex = 0;
+            this.signalsTreeView.ZedGraphConrol = null;
+            this.signalsTreeView.NodeMouseHover += new System.Windows.Forms.TreeNodeMouseHoverEventHandler(this.signalsTreeView_NodeMouseHover);
+            this.signalsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.signalsTreeView_NodeMouseClick);
+            this.signalsTreeView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.signalsTreeView_MouseDown);
+            // 
+            // addSignalToolStripMenuItem
+            // 
+            this.addSignalToolStripMenuItem.Name = "addSignalToolStripMenuItem";
+            this.addSignalToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.addSignalToolStripMenuItem.Text = "Add Signal";
+            this.addSignalToolStripMenuItem.Click += new System.EventHandler(this.addSignalToolStripMenuItem_Click);
             // 
             // WfdbToZedGraphControl
             // 
@@ -173,6 +201,7 @@
             this.splitContainerControls.ResumeLayout(false);
             this.contextMenuStripSignalNode.ResumeLayout(false);
             this.contextMenuStripRecordNode.ResumeLayout(false);
+            this.contextMenuStripTree.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -189,5 +218,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripRecordNode;
         private System.Windows.Forms.ToolStripMenuItem removeRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveRecordToCSVToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTree;
+        private System.Windows.Forms.ToolStripMenuItem addEmptyRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addSignalToolStripMenuItem;
     }
 }

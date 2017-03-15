@@ -7,10 +7,19 @@ using WfdbCsharpWrapper;
 
 namespace WfdbToZedGraph
 {
-    class WfdbRecordWraperInstance : WfdbRecordWraper
+    internal class WfdbRecordWraperInstance : WfdbRecordWraper
     {
         public WfdbRecordWraperInstance(Record record)
             : base(record)
         { }
+
+        public WfdbRecordWraperInstance(string name)
+            : base(name)
+        { }
+
+        public void SetUseTemp(bool useTemp) 
+        {
+            this.UseTemp = useTemp;
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace WfdbToZedGraph
             this.OpenedByWfdb = true;
         }
 
-        public WfdbSignalWraper(PointPairList pointPairList)
+        public WfdbSignalWraper(PointPairList pointPairList, string name, int number)
         {
             if(pointPairList == null)
                 throw new NullReferenceException();

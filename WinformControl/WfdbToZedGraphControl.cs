@@ -30,6 +30,12 @@ namespace WfdbToZedGraph.WinformControl
 
         #endregion
 
+        #region Events
+
+        public event TreeViewEventHandler AddNewSignal;
+
+        #endregion
+
         #region Constructors
 
         public WfdbToZedGraphControl()
@@ -101,6 +107,15 @@ namespace WfdbToZedGraph.WinformControl
                     currentTip.Active = false;
         }
 
+        private void signalsTreeView_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point p = new Point(e.X, e.Y);
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                this.contextMenuStripTree.Show(this.signalsTreeView, p);
+            }
+        }
+
         #endregion
 
         #region MenuClicks
@@ -163,8 +178,34 @@ namespace WfdbToZedGraph.WinformControl
 
         #endregion
 
-        #endregion
+        private void addEmptyRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WfdbRecordWraper rec = this.WfdbBinder.CreateEmptyRecord("test");
+            RecordTreeNode node = new RecordTreeNode(rec);
+            this.TreeNodes.Add(node);
+        }
 
         #endregion
+
+        private void contextMenuStripRecordNode_Opening(object sender, CancelEventArgs e)
+        {
+            if (this.AddNewSignal == null)
+                addSignalToolStripMenuItem.Enabled = false;
+            else
+            {
+                addSignalToolStripMenuItem.Enabled = true;
+            }
+        }
+
+        #endregion
+
+        private void addSignalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.AddNewSignal != null)
+                AddNewSignal (
+                    this.signalsTreeView, 
+                    new TreeViewEventArgs(this.signalsTreeView.SelectedNode)
+                    );
+        }
     }
 }

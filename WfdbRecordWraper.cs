@@ -21,9 +21,10 @@ namespace WfdbToZedGraph
 
         public List<WfdbSignalWraper> Signals { get { return this.signals; } }
         public string Name { get; set; }
-        public bool UseTemp { get; set; } 
+        public bool UseTemp { get; protected set; } 
         public string TempPath { get; set; }
         public string[] UsedExtensions { get; set; }
+        public bool CreatedByWfdb { get; private set; }
 
         #endregion
 
@@ -35,17 +36,32 @@ namespace WfdbToZedGraph
 
         #region Constructors
 
-        public WfdbRecordWraper(WfdbCsharpWrapper.Record record)
+        public WfdbRecordWraper(WfdbCsharpWrapper.Record record) 
+            : this()
         {
-            this.usedExtensions = new List<string>();
             this.record = record;
             this.record.Open();
-            this.signals = new List<WfdbSignalWraper>();
             foreach(Signal s in this.record.Signals)
             {
                 this.signals.Add(new WfdbSignalWraper(s));
             }
             this.Name = record.Name;
+            this.CreatedByWfdb = true;
+        }
+
+        public WfdbRecordWraper(string name)
+            : this()
+        {
+            this.Name = name;
+            this.record = null;
+            this.CreatedByWfdb = false;
+            this.UseTemp = false;
+        }
+
+        private WfdbRecordWraper()
+        {
+            this.usedExtensions = new List<string>();
+            this.signals = new List<WfdbSignalWraper>();
         }
 
         #endregion
@@ -92,6 +108,27 @@ namespace WfdbToZedGraph
                 }
             }
             return stb.ToString();
+        }
+
+        #endregion
+
+        #region Signal Methods
+        /// <summary>
+        /// Add Signal by SignalWraper.
+        /// Signals can be added only for record created as empty.
+        /// Record created by Wfdb will not allow to add signal.
+        /// </summary>
+        /// <param name="wfdbSignalWraper"></param>
+        /// <returns></returns>
+        public bool AddSignal(WfdbSignalWraper wfdbSignalWraper)
+        {
+            if (this.record == null)
+            {
+                this.signals.Add(wfdbSignalWraper);
+                return true;
+            }
+            else
+                return false;
         }
 
         #endregion
