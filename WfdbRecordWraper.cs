@@ -25,6 +25,12 @@ namespace WfdbToZedGraph
         public string TempPath { get; set; }
         public string[] UsedExtensions { get; set; }
         public bool CreatedByWfdb { get; private set; }
+        public bool IsRecordSet { get; private set; }
+        private Record Record 
+        { 
+            get { return this.record; }
+            set { this.record = value; IsRecordSet = true; }
+        }
 
         #endregion
 
@@ -122,7 +128,7 @@ namespace WfdbToZedGraph
         /// <returns></returns>
         public bool AddSignal(WfdbSignalWraper wfdbSignalWraper)
         {
-            if (this.record == null)
+            if (!this.CreatedByWfdb)
             {
                 this.signals.Add(wfdbSignalWraper);
                 return true;

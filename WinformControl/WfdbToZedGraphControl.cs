@@ -176,13 +176,20 @@ namespace WfdbToZedGraph.WinformControl
             }
         }
 
-        #endregion
-
         private void addEmptyRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             WfdbRecordWraper rec = this.WfdbBinder.CreateEmptyRecord("test");
             RecordTreeNode node = new RecordTreeNode(rec);
             this.TreeNodes.Add(node);
+        }
+
+        private void addSignalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.AddNewSignal != null)
+                AddNewSignal (
+                    this.signalsTreeView, 
+                    new TreeViewEventArgs(this.signalsTreeView.SelectedNode)
+                    );
         }
 
         #endregion
@@ -199,13 +206,39 @@ namespace WfdbToZedGraph.WinformControl
 
         #endregion
 
-        private void addSignalToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+
+        #region Public Methods
+
+        public bool AddNewSignalMethod(WfdbSignalWraper signal, TreeNode node)
         {
-            if (this.AddNewSignal != null)
-                AddNewSignal (
-                    this.signalsTreeView, 
-                    new TreeViewEventArgs(this.signalsTreeView.SelectedNode)
-                    );
+            RecordTreeNode recordNode = node as RecordTreeNode;
+            if (recordNode != null)
+            {
+                try
+                {
+                    if (recordNode.Record.AddSignal(signal))
+                    {
+                        SignalTreeNode signalNode = new SignalTreeNode(signal);
+                        recordNode.Nodes.Add(signalNode);
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("You can not add signal to this record");
+                        return false;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                return false;
+            }
+            else
+                return false;
         }
+
+        #endregion
     }
 }

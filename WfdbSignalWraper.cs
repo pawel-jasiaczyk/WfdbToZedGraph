@@ -69,6 +69,8 @@ namespace WfdbToZedGraph
             this.OpenedByWfdb = false;
             this.fileName = "";
             this.signalNumber = 0;
+            this.numberOfSambples = pointPairList.Count;
+            this.samples = pointPairList;
         }
 
         #endregion
