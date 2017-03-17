@@ -1,0 +1,150 @@
+/******************************************************************************/
+/*                                Legend:                                     */
+/* Priorities:                                                                */
+/* 1 - Lower                                                                  */
+/* 5 - Highier                                                                */
+/*                                                                            */
+/* Project: WfdbToZedGraph                                                    */
+/*                                                                            */
+/*                                                                            */
+/******************************************************************************/
+
+/******************************************************************************/
+/*                             WfdbToZedGraph                                 */
+/******************************************************************************/
+
+/******************************************************************************/
+#7
+Priority: 4
+Type: Feature
+Save record to file
+  * Description:
+    - We need to be albe to write ZedGraph chart to file
+    - It will be great if file will be compatible with wfdb
+  * Reasons:
+    -...
+  * Problems:
+    - ZedGraph uses double vaules for its co-ordinates
+    - Wfdb uses probes with standard distance and in different lenght integers
+    - Coding in wfdb standard
+  * Solutions:
+    - Check if wfdb has any tool for that.
+      -- It has only for coding, if we have data in proper format
+    - Check if wfdbcsharp works with it
+      -- It don't. It can only read
+    - Tempoporary write all probles as doubles
+    - Found or prepare tool for quantisation and samplification of ZedGraph 
+      record values.
+  * Additional:
+    - Full descriptions, soutions etc in SaveFileSection
+/******************************************************************************/
+#2
+Priority: 3
+Type: Feature
+Slow opening of records and blocking all application
+  Reason:
+    - Records are big files with a lot of data - all must be read.
+  Solutions:
+    - Multithread application - if it is possible with wfdb library
+    - Optimalization of algorithms.
+/******************************************************************************/
+#4
+Priority: 3
+Type: Feature
+Binder configuration
+  Description:
+    - Configuration options are realy poor
+  Reasons:  
+    - Addidtional configuration wasn't prepare
+    - Autoconfiguration works fine at this moment
+  Solution:
+    - Create class for configuration object
+/******************************************************************************/
+#5
+Priority: 3
+Type: Feature
+Open www records
+  Description:
+    - We need to be able to open record from www database
+  Reasons:
+    - ...
+  Solutions:
+    - Check if wfdb provide it
+    - Check if wfdbcsharp provide it
+    - Write own solution
+/******************************************************************************/
+#1
+Priority: 2
+Type: Bug
+There is no possibility to open the same record twice.
+  Reason:
+    -When record is open, file(also temporary file) is in use by one object.
+  Solutions:
+    - Temporary file(or temporary directory) for each one openend record.
+    - Reading all signals from record and dispose resources.
+      * Dispose resources is already coded, there is no automatically reading
+        all record and disposing
+/******************************************************************************/
+#9
+Priority: 2
+Tree context menu
+  * To define
+/******************************************************************************/
+#10
+Priority: 2
+Menu for control
+  * To define
+/******************************************************************************/
+#3
+Priority: 1
+Type: Bug
+Wfdb.dll localisation.
+  Description:
+    - It works only if wfdb.dll is in app root direcotry
+  Reason:
+    - No specified locations to search of this dll
+  Solutions:
+    - Environtment variables to set seatch locations
+    - Edit wfdbcsharp to set this location as relative path
+/******************************************************************************/
+#6
+Priority: 1
+Type: Bug
+Temp problems under Visual Studio
+  * Description:
+    - Under Visual Studio there is temporary app.configuration for debug 
+      instance, so if w try to write there data about temp catalog, it will be
+      lost.
+    - It works properly when we run app directly, without Visual Studio
+  * Reasons:
+    - Tepmporary appconfig file under VS
+  * Solutions:
+    - Preprocessor directives #if DEBUG to set temp direcotry different
+      for debug mode
+/******************************************************************************/
+#8
+Priority: 1
+Type: feature
+Deleting record from the list
+  * Description:
+    - We need to be able to delete record from the list
+  * Reasoons:
+    - ...
+  * Problems:
+    - Deleting reord from list will cause unability to manage zedgraph cuve 
+      created with it.
+  * Solutions:
+    - It works fine now.
+/******************************************************************************/
+#11
+Priority: 1
+Control properties in Visual Studio Designer
+  * Description:
+    - It is unable to set wright ZedGraph Control and Binder in VS Designer for
+      our control.
+/******************************************************************************/
+
+/******************************************************************************/
+/*                             Save Graph to File                             */
+/******************************************************************************/
+
