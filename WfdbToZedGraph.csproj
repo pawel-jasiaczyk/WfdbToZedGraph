@@ -58,6 +58,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LocalFilesManager\WfdbLocalFilesManager.cs" />
     <Compile Include="LocalFilesManager\WfdbPathException.cs" />
+    <Compile Include="SamplesConversion\ConversionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SamplesConversion\ConversionWindow.Designer.cs">
+      <DependentUpon>ConversionWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SamplesConversion\SamplesConvertor.cs" />
     <Compile Include="WfdbRecordWraperInstance.cs" />
     <Compile Include="WinformControl\RecordTreeNode.cs" />
     <Compile Include="WinformControl\SignalsTreeView.cs">
@@ -76,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="wfdb.dll" />
+    <Content Include="WfdbToDoEnd.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\" />
@@ -85,6 +93,9 @@
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SamplesConversion\ConversionWindow.resx">
+      <DependentUpon>ConversionWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinformControl\WfdbToZedGraphControl.resx">
       <DependentUpon>WfdbToZedGraphControl.cs</DependentUpon>
     </EmbeddedResource>
