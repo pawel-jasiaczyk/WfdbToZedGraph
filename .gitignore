@@ -286,3 +286,6 @@ __pycache__/
 
 # Data Catalog - with sample data for wfdb
 [Dd]ata/
+
+# Vim temp files
+*.swp
