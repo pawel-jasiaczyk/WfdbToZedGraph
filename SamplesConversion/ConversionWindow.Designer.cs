@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.splitContainerZedGraphsLowest = new System.Windows.Forms.SplitContainer();
             this.splitContainerZedGraphTop = new System.Windows.Forms.SplitContainer();
-            this.splitContainerZedGraphBottom = new System.Windows.Forms.SplitContainer();
             this.zedGraphControlSource = new ZedGraph.ZedGraphControl();
             this.zedGraphControlNoise = new ZedGraph.ZedGraphControl();
+            this.splitContainerZedGraphBottom = new System.Windows.Forms.SplitContainer();
             this.zedGraphControlSamples = new ZedGraph.ZedGraphControl();
             this.zedGraphControlRestored = new ZedGraph.ZedGraphControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerZedGraphsLowest)).BeginInit();
@@ -81,28 +81,10 @@
             // 
             // splitContainerZedGraphTop.Panel2
             // 
-            this.splitContainerZedGraphTop.Panel2.Controls.Add(this.zedGraphControlNoise);
+            this.splitContainerZedGraphTop.Panel2.Controls.Add(this.zedGraphControlSamples);
             this.splitContainerZedGraphTop.Size = new System.Drawing.Size(823, 382);
             this.splitContainerZedGraphTop.SplitterDistance = 199;
             this.splitContainerZedGraphTop.TabIndex = 0;
-            // 
-            // splitContainerZedGraphBottom
-            // 
-            this.splitContainerZedGraphBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerZedGraphBottom.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerZedGraphBottom.Name = "splitContainerZedGraphBottom";
-            this.splitContainerZedGraphBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerZedGraphBottom.Panel1
-            // 
-            this.splitContainerZedGraphBottom.Panel1.Controls.Add(this.zedGraphControlSamples);
-            // 
-            // splitContainerZedGraphBottom.Panel2
-            // 
-            this.splitContainerZedGraphBottom.Panel2.Controls.Add(this.zedGraphControlRestored);
-            this.splitContainerZedGraphBottom.Size = new System.Drawing.Size(823, 375);
-            this.splitContainerZedGraphBottom.SplitterDistance = 183;
-            this.splitContainerZedGraphBottom.TabIndex = 0;
             // 
             // zedGraphControlSource
             // 
@@ -131,8 +113,26 @@
             this.zedGraphControlNoise.ScrollMinX = 0D;
             this.zedGraphControlNoise.ScrollMinY = 0D;
             this.zedGraphControlNoise.ScrollMinY2 = 0D;
-            this.zedGraphControlNoise.Size = new System.Drawing.Size(823, 179);
+            this.zedGraphControlNoise.Size = new System.Drawing.Size(823, 183);
             this.zedGraphControlNoise.TabIndex = 0;
+            // 
+            // splitContainerZedGraphBottom
+            // 
+            this.splitContainerZedGraphBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerZedGraphBottom.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerZedGraphBottom.Name = "splitContainerZedGraphBottom";
+            this.splitContainerZedGraphBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerZedGraphBottom.Panel1
+            // 
+            this.splitContainerZedGraphBottom.Panel1.Controls.Add(this.zedGraphControlNoise);
+            // 
+            // splitContainerZedGraphBottom.Panel2
+            // 
+            this.splitContainerZedGraphBottom.Panel2.Controls.Add(this.zedGraphControlRestored);
+            this.splitContainerZedGraphBottom.Size = new System.Drawing.Size(823, 375);
+            this.splitContainerZedGraphBottom.SplitterDistance = 183;
+            this.splitContainerZedGraphBottom.TabIndex = 0;
             // 
             // zedGraphControlSamples
             // 
@@ -146,7 +146,7 @@
             this.zedGraphControlSamples.ScrollMinX = 0D;
             this.zedGraphControlSamples.ScrollMinY = 0D;
             this.zedGraphControlSamples.ScrollMinY2 = 0D;
-            this.zedGraphControlSamples.Size = new System.Drawing.Size(823, 183);
+            this.zedGraphControlSamples.Size = new System.Drawing.Size(823, 179);
             this.zedGraphControlSamples.TabIndex = 0;
             // 
             // zedGraphControlRestored

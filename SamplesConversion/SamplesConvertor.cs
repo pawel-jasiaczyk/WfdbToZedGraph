@@ -14,6 +14,11 @@ namespace WfdbToZedGraph.SamplesConversion
         private double freq;
         private int result;
         private PointPairList pointPairList;
+        
+        // bit resolution
+        private uint bitResolution;
+        private int maxDigitalValue;
+        private int minDigitalValue;
 
         #endregion
 
@@ -57,6 +62,18 @@ namespace WfdbToZedGraph.SamplesConversion
 
         public int SamplingMode { get; set; }
 
+        public double MaxPhysicalValue { get; set; }
+        public double MinPhysicalValue { get; set; }
+        public uint BitResolution
+        {
+            get { return bitResolution; }
+            set 
+            { 
+                bitResolution = value;
+                SetDigitalRanges();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -98,12 +115,13 @@ namespace WfdbToZedGraph.SamplesConversion
             int currentResultSample = 0;
             if (this.SamplingMode == 0) // Only one sample get last value
             {
-                for (int i = 0; i < this.pointPairList.Count; i++)
+                for (int i = 0; i < this.pointPairList.Count; i++) // not sure if it works properly - i'm tired
                 {
                     int maxSampleNumber = (int)(this.pointPairList[i].X * freq);
-
-
-
+                    for (; currentResultSample < maxSampleNumber; currentResultSample++)
+                        result[currentResultSample] = 0.0;
+                    result[maxSampleNumber] = this.pointPairList[i].Y;
+                    currentResultSample = maxSampleNumber + 1;
                 }
             }
             else // Each sample after one from source get ist vaule (untill there will not get another sample);
@@ -127,7 +145,12 @@ namespace WfdbToZedGraph.SamplesConversion
 
             return result;
         }
-
+        
+        private void SetDigitalRanges()
+        {
+            this.maxDigitalValue = (int)Math.Pow(2, bitResolution - 1) - 1;
+            this.minDigitalValue = (-(int)Math.Pow(2, bitResolution - 1));
+        }
 
         #endregion
     }
