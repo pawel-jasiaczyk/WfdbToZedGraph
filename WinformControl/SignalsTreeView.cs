@@ -17,6 +17,7 @@ namespace WfdbToZedGraph.WinformControl
         private ZedGraph.ZedGraphControl zedGraph;
         private Object thisLock = new Object();
         private OpenrecordProgressBarPopUp popup;
+        private List<PointPairList> pointPairLists;
 
         #endregion
 
@@ -36,6 +37,7 @@ namespace WfdbToZedGraph.WinformControl
         {
             this.CheckBoxes = true;
             this.EventsConfiguration();
+            this.pointPairLists = new List<PointPairList>();
         }
 
         public SignalsTreeView(ZedGraphControl zedGraphControl) : this()
@@ -67,7 +69,12 @@ namespace WfdbToZedGraph.WinformControl
 
         public void LoadToGraph()
         {
-            this.zedGraph.Enabled = false;
+            GetProbes(true);
+        }
+
+        public List<PointPairList> GetProbes(bool loadToZedGraph)
+        {
+            if(loadToZedGraph) this.zedGraph.Enabled = false;
             //popup = new OpenrecordProgressBarPopUp();
             //popup.Show();
             foreach (TreeNode rec in this.Nodes)
@@ -85,11 +92,15 @@ namespace WfdbToZedGraph.WinformControl
                                 if (s.Curve == null)
                                 {
                                     PointPairList p = s.Signal.GetSamples();
-                                    s.Curve =
-                                        this.zedGraph.GraphPane.AddCurve
-                                        (s.Name, p, Color.Black, SymbolType.None);
+                                    this.pointPairLists.Add(p);
+                                    if (loadToZedGraph)
+                                    {
+                                        s.Curve =
+                                            this.zedGraph.GraphPane.AddCurve
+                                            (s.Name, p, Color.Black, SymbolType.None);
+                                    }
                                 }
-                                else if (!this.zedGraph.GraphPane.CurveList.Contains(s.Curve))
+                                else if (!this.zedGraph.GraphPane.CurveList.Contains(s.Curve) && loadToZedGraph)
                                 {
                                     this.zedGraph.GraphPane.CurveList.Add(s.Curve);
                                 }
@@ -97,7 +108,8 @@ namespace WfdbToZedGraph.WinformControl
                             else
                             {
                                 if (s.Curve != null
-                                    && this.zedGraph.GraphPane.CurveList.Contains(s.Curve))
+                                    && this.zedGraph.GraphPane.CurveList.Contains(s.Curve)
+                                    && loadToZedGraph)
                                 {
                                     this.zedGraph.GraphPane.CurveList.Remove(s.Curve);
                                 }
@@ -106,13 +118,14 @@ namespace WfdbToZedGraph.WinformControl
                     }
                 }
             }
-            this.zedGraph.Enabled = true;
-            this.zedGraph.AxisChange();
-            this.zedGraph.Refresh();
+            if (loadToZedGraph)
+            {
+                this.zedGraph.Enabled = true;
+                this.zedGraph.AxisChange();
+                this.zedGraph.Refresh();
+            }
+            return this.pointPairLists;
         }
 
-        private void GetSignals ()
-        {
-        }
     }
 }
