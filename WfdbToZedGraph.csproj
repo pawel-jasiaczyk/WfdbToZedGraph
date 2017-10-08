@@ -66,6 +66,18 @@
     </Compile>
     <Compile Include="SamplesConversion\SamplesConvertor.cs" />
     <Compile Include="WfdbRecordWraperInstance.cs" />
+    <Compile Include="WinformControl\OpenRecordProgresBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinformControl\OpenRecordProgresBar.Designer.cs">
+      <DependentUpon>OpenRecordProgresBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinformControl\OpenrecordProgressBarPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinformControl\OpenrecordProgressBarPopUp.Designer.cs">
+      <DependentUpon>OpenrecordProgressBarPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinformControl\RecordTreeNode.cs" />
     <Compile Include="WinformControl\SignalsTreeView.cs">
       <SubType>Component</SubType>
@@ -95,6 +107,12 @@
   <ItemGroup>
     <EmbeddedResource Include="SamplesConversion\ConversionWindow.resx">
       <DependentUpon>ConversionWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinformControl\OpenRecordProgresBar.resx">
+      <DependentUpon>OpenRecordProgresBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinformControl\OpenrecordProgressBarPopUp.resx">
+      <DependentUpon>OpenrecordProgressBarPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinformControl\WfdbToZedGraphControl.resx">
       <DependentUpon>WfdbToZedGraphControl.cs</DependentUpon>
