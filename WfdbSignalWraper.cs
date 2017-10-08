@@ -74,6 +74,7 @@ namespace WfdbToZedGraph
         public int InitValueSignalNumber { get; private set; }
         public int InitValueAdu { get; private set; }
 
+        public double SamplingFrequency { get; private set; }
 
         public TimeSpan TimeDiff { get; private set; }
 
@@ -108,7 +109,7 @@ namespace WfdbToZedGraph
             this.SamplesPerFrame = signal.SamplesPerFrame;
             this.Skew = signal.Skew;
             this.Units = signal.Units != null ? signal.Units : "";
-
+            this.SamplingFrequency = signal.Record.SamplingFrequency.Value;
             this.TimeDiff = new TimeSpan(this.Duration.ToTimeSpan().Ticks / this.numberOfSambples);
         }
 

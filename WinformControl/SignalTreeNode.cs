@@ -45,6 +45,9 @@ namespace WfdbToZedGraph.WinformControl
             else
                 stb.AppendLine("No");
 
+            stb.Append("Sampling Frequency: ");
+            stb.AppendLine(Signal.SamplingFrequency.ToString());
+
             stb.AppendLine();
 
             stb.Append("Adc resolution: ");
@@ -63,10 +66,10 @@ namespace WfdbToZedGraph.WinformControl
             stb.AppendLine(Signal.CheckSum.ToString());
 
             stb.Append("Current time: ");
-            stb.AppendLine(Signal.CurrentTime.ToMSString());
+            stb.AppendLine(Signal.CurrentTime.ToTimeSpan().ToString());
 
             stb.Append("Duration: ");
-            stb.AppendLine(Signal.Duration.ToMSString());
+            stb.AppendLine(Signal.Duration.ToTimeSpan().ToString());
 
             stb.Append("Format: ");
             stb.AppendLine(Signal.Format.ToString());
@@ -91,13 +94,6 @@ namespace WfdbToZedGraph.WinformControl
 
             stb.Append("Units: ");
             stb.AppendLine(Signal.Units.ToString());
-
-
-            stb.AppendLine("*** Test Area ***");
-            stb.Append("Time Diff: ");
-            stb.AppendLine(Signal.TimeDiff.TotalMilliseconds.ToString());
-            stb.Append("Ticks : ");
-            stb.AppendLine(Signal.Duration.ToTimeSpan().Ticks.ToString());
 
             return stb.ToString();
         }
